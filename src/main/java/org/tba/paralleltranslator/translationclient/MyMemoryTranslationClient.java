@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
+import org.tba.paralleltranslator.utils.ErrorMessages;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +25,6 @@ public class MyMemoryTranslationClient implements TranslationClient {
 
     @Override
     public String translate(String text, String sourceLang, String targetLang) throws RuntimeException {
-       // System.out.println("Translating " + text + " to " + targetLang);
         try {
             String cleanWorld = getCleanWorld(text);
             if (cleanWorld.isEmpty()) return text;
@@ -39,14 +39,14 @@ public class MyMemoryTranslationClient implements TranslationClient {
                 if (translationResponse != null) {
                     return getFullWorld(text, translationResponse.getResponseData().getTranslatedText());
                 } else {
-                    throw new RuntimeException("Empty response body from translation API");
+                    throw new RuntimeException(ErrorMessages.EMPTY_RESPONSE_BODY);
                 }
             } else {
-                throw new RuntimeException("Failed to get translation from API. HTTP status: " + response.getStatusCode());
+                throw new RuntimeException(ErrorMessages.API_CALL_FAILURE + response.getStatusCode());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error occurred while calling translation API: " + e.getMessage(), e);
+            throw new RuntimeException(ErrorMessages.GENERAL_API_ERROR, e);
         }
     }
 
