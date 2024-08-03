@@ -35,13 +35,17 @@ public class TranslationController {
             return new ResponseEntity<>(translatedText, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(ErrorMessages.ERROR_WORD_TOO_LONG, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return new ResponseEntity<>(ErrorMessages.ERROR_TRANSLATION_INTERRUPTED, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (ExecutionException e) {
             e.printStackTrace();
             return new ResponseEntity<>(ErrorMessages.ERROR_EXECUTION_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 }
