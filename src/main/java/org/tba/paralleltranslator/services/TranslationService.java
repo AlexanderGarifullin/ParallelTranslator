@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.requests.TranslationRequest;
+import org.tba.paralleltranslator.utils.ErrorMessages;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -26,15 +27,14 @@ public class TranslationService {
         this.executorService = executorService;
     }
 
-
     public String translate(String text, String sourceLang, String targetLang) throws InterruptedException,
-            ExecutionException, IllegalArgumentException {
+            ExecutionException, IllegalArgumentException, RuntimeException {
         String[] words = text.split("\\s+");
 
         List<Callable<String>> tasks = new ArrayList<>();
         for (String word : words) {
             if (word.getBytes(StandardCharsets.UTF_8).length > 500) {
-                throw new IllegalArgumentException("Word exceeds maximum length of 500 bytes: " + word);
+                throw new IllegalArgumentException(ErrorMessages.ERROR_WORD_TOO_LONG);
             }
             tasks.add(() -> translationClient.translate(word, sourceLang, targetLang));
         }
