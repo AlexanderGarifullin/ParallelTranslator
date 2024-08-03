@@ -3,11 +3,15 @@ package org.tba.paralleltranslator.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.services.TranslationService;
+import org.tba.paralleltranslator.utils.ErrorMessages;
+
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api")
@@ -21,12 +25,23 @@ public class TranslationController {
     }
 
     @PostMapping("/translate")
-    public String translate(@RequestParam String text,
-                            @RequestParam String sourceLang,
-                            @RequestParam String targetLang,
-                            HttpServletRequest request) {
-        String clientIp = request.getRemoteAddr();
-        System.out.println(clientIp);
-        return translationService.translate(text, sourceLang, targetLang);
+    public ResponseEntity<String> translate(@RequestBody TranslationRequest request,
+                                            HttpServletRequest servletRequest) {
+        translationService.processTranslationRequest(request);
+
+        try {
+            String translatedText = translationService.translate(request.getText(), request.getSourceLang(), request.getTargetLang());
+            translationService.saveRequest(servletRequest.getRemoteAddr(), request.getText(), translatedText);
+            return new ResponseEntity<>(translatedText, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(ErrorMessages.ERROR_WORD_TOO_LONG, HttpStatus.BAD_REQUEST);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(ErrorMessages.ERROR_TRANSLATION_INTERRUPTED, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(ErrorMessages.ERROR_EXECUTION_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
