@@ -25,28 +25,29 @@ public class MyMemoryTranslationClient implements TranslationClient {
 
     @Override
     public String translate(String text, String sourceLang, String targetLang) throws RuntimeException {
+        String cleanWorld = getCleanWorld(text);
+        if (cleanWorld.isEmpty()) return text;
+        ResponseEntity<TranslationResponse> response;
+
         try {
-            String cleanWorld = getCleanWorld(text);
-            if (cleanWorld.isEmpty()) return text;
-            ResponseEntity<TranslationResponse> response = restTemplate.getForEntity(
+            response = restTemplate.getForEntity(
                     API_URL,
                     TranslationResponse.class,
                     cleanWorld, sourceLang, targetLang
             );
-
-            if (response.getStatusCode() == HttpStatus.OK) {
-                TranslationResponse translationResponse = response.getBody();
-                if (translationResponse != null) {
-                    return replaceWorld(text, translationResponse.getResponseData().getTranslatedText());
-                } else {
-                    throw new RuntimeException(ErrorMessages.EMPTY_RESPONSE_BODY);
-                }
-            } else {
-                throw new RuntimeException(ErrorMessages.API_CALL_FAILURE + response.getStatusCode());
-            }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(ErrorMessages.GENERAL_API_ERROR, e);
+        }
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            TranslationResponse translationResponse = response.getBody();
+            if (translationResponse != null) {
+                return replaceWorld(text, translationResponse.getResponseData().getTranslatedText());
+            } else {
+                throw new RuntimeException(ErrorMessages.EMPTY_RESPONSE_BODY);
+            }
+        } else {
+            throw new RuntimeException(ErrorMessages.API_CALL_FAILURE + response.getStatusCode());
         }
     }
 
