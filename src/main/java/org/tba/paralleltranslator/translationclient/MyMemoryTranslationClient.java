@@ -50,7 +50,7 @@ public class MyMemoryTranslationClient implements TranslationClient {
         }
     }
 
-    private static class TranslationResponse {
+    static class TranslationResponse {
         private ResponseData responseData;
 
         public ResponseData getResponseData() {
@@ -62,7 +62,7 @@ public class MyMemoryTranslationClient implements TranslationClient {
         }
     }
 
-    private static class ResponseData {
+    static class ResponseData {
         private String translatedText;
 
         public String getTranslatedText() {
