@@ -29,15 +29,8 @@ public class TranslationService {
 
     public String translate(String text, String sourceLang, String targetLang) throws InterruptedException,
             ExecutionException, IllegalArgumentException, RuntimeException {
-        String[] words = text.split("\\s+");
 
-        List<Callable<String>> tasks = new ArrayList<>();
-        for (String word : words) {
-            if (word.getBytes(StandardCharsets.UTF_8).length > 500) {
-                throw new IllegalArgumentException(ErrorMessages.ERROR_WORD_TOO_LONG);
-            }
-            tasks.add(() -> translationClient.translate(word, sourceLang, targetLang));
-        }
+        List<Callable<String>> tasks = getTasks(text, sourceLang, targetLang);
 
         List<Future<String>> futures = executorService.invokeAll(tasks);
 
@@ -49,11 +42,24 @@ public class TranslationService {
         return translatedText.toString().trim();
     }
 
+    List<Callable<String>> getTasks(String text, String sourceLang, String targetLang) throws IllegalArgumentException{
+        String[] words = text.split("\\s+");
+
+        List<Callable<String>> tasks = new ArrayList<>();
+        for (String word : words) {
+            if (word.getBytes(StandardCharsets.UTF_8).length > 500) {
+                throw new IllegalArgumentException(ErrorMessages.ERROR_WORD_TOO_LONG);
+            }
+            tasks.add(() -> translationClient.translate(word, sourceLang, targetLang));
+        }
+        return tasks;
+    }
+
     public void processTranslationRequest(TranslationRequest request) {
         processText(request);
     }
 
-    public void processText(TranslationRequest request) {
+    void processText(TranslationRequest request) {
         String[] words = request.getText().split("\\s+");
         StringBuilder processText = new StringBuilder();
 
@@ -61,7 +67,7 @@ public class TranslationService {
             processText.append(word.trim()).append(" ");
         }
 
-        request.setText(processText.toString());
+        request.setText(processText.toString().trim());
     }
 
     @Async
