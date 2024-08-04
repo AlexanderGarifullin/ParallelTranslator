@@ -13,7 +13,7 @@ public class StringMethods {
         return text.substring(firstIndex, lastIndex + 1);
     }
 
-    public static String replaceWorld(String text, String translatedText) {
+    public static String replaceWorld(String text, String newWorld) {
         int firstIndex = findFirstLetterIndex(text);
         int lastIndex = findLastLetterIndex(text);
 
@@ -23,7 +23,7 @@ public class StringMethods {
 
         String before = text.substring(0, firstIndex);
         String after = text.substring(lastIndex + 1);
-        return before + translatedText + after;
+        return before + newWorld + after;
     }
 
 
