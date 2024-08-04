@@ -9,7 +9,7 @@ import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
 import static org.tba.paralleltranslator.utils.StringMethods.getCleanWorld;
-import static org.tba.paralleltranslator.utils.StringMethods.uniteText;
+import static org.tba.paralleltranslator.utils.StringMethods.replaceWorld;
 
 @Component
 public class MyMemoryTranslationClient implements TranslationClient {
@@ -37,7 +37,7 @@ public class MyMemoryTranslationClient implements TranslationClient {
             if (response.getStatusCode() == HttpStatus.OK) {
                 TranslationResponse translationResponse = response.getBody();
                 if (translationResponse != null) {
-                    return uniteText(text, translationResponse.getResponseData().getTranslatedText());
+                    return replaceWorld(text, translationResponse.getResponseData().getTranslatedText());
                 } else {
                     throw new RuntimeException(ErrorMessages.EMPTY_RESPONSE_BODY);
                 }

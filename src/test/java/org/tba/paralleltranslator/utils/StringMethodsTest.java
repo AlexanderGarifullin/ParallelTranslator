@@ -34,12 +34,12 @@ class StringMethodsTest {
     }
 
     @Test
-    public void testUniteText() {
-        assertEquals("Hola", StringMethods.uniteText("Hello", "Hola"));
-        assertEquals("  Hola  ", StringMethods.uniteText("  Hello  ", "Hola"));
-        assertEquals("123Hola456", StringMethods.uniteText("123Hello456", "Hola"));
-        assertEquals("123456", StringMethods.uniteText("123456", "Hola"));
-        assertEquals("!231Hola", StringMethods.uniteText("!231Hello", "Hola"));
-        assertEquals("Hola!123", StringMethods.uniteText("Hello!123", "Hola"));
+    public void testReplaceWorld() {
+        assertEquals("Hola", StringMethods.replaceWorld("Hello", "Hola"));
+        assertEquals("  Hola  ", StringMethods.replaceWorld("  Hello  ", "Hola"));
+        assertEquals("123Hola456", StringMethods.replaceWorld("123Hello456", "Hola"));
+        assertEquals("123456", StringMethods.replaceWorld("123456", "Hola"));
+        assertEquals("!231Hola", StringMethods.replaceWorld("!231Hello", "Hola"));
+        assertEquals("Hola!123", StringMethods.replaceWorld("Hello!123", "Hola"));
     }
 }
