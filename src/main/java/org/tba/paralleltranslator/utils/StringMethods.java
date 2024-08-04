@@ -13,7 +13,7 @@ public class StringMethods {
         return text.substring(firstIndex, lastIndex + 1);
     }
 
-    public static String getFullWorld(String text, String translatedText) {
+    public static String uniteText(String text, String translatedText) {
         int firstIndex = findFirstLetterIndex(text);
         int lastIndex = findLastLetterIndex(text);
 
