@@ -51,6 +51,7 @@ class TranslationControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(translatedText, response.getBody());
 
+        verify(translationService, times(1)).processTranslationRequest(request);
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(1)).saveRequest(clientIp,
@@ -68,6 +69,7 @@ class TranslationControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(ErrorMessages.ERROR_WORD_TOO_LONG, response.getBody());
 
+        verify(translationService, times(1)).processTranslationRequest(request);
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(0)).saveRequest(anyString(), anyString(), anyString());
@@ -84,6 +86,7 @@ class TranslationControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals(ErrorMessages.ERROR_TRANSLATION_INTERRUPTED, response.getBody());
 
+        verify(translationService, times(1)).processTranslationRequest(request);
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(0)).saveRequest(anyString(), anyString(), anyString());
@@ -100,6 +103,7 @@ class TranslationControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals(ErrorMessages.ERROR_EXECUTION_EXCEPTION, response.getBody());
 
+        verify(translationService, times(1)).processTranslationRequest(request);
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(0)).saveRequest(anyString(), anyString(), anyString());
@@ -115,6 +119,7 @@ class TranslationControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("Some runtime exception", response.getBody());
 
+        verify(translationService, times(1)).processTranslationRequest(request);
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(0)).saveRequest(anyString(), anyString(), anyString());
