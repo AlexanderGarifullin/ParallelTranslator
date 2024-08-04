@@ -8,8 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import static org.tba.paralleltranslator.utils.StringMethods.getCleanWorld;
+import static org.tba.paralleltranslator.utils.StringMethods.getFullWorld;
 
 @Component
 public class MyMemoryTranslationClient implements TranslationClient {
@@ -72,49 +72,5 @@ public class MyMemoryTranslationClient implements TranslationClient {
         public void setTranslatedText(String translatedText) {
             this.translatedText = translatedText;
         }
-    }
-
-    static String getCleanWorld(String text) {
-        int firstIndex = findFirstLetterIndex(text);
-        int lastIndex = findLastLetterIndex(text);
-
-        if (firstIndex == -1 || lastIndex == -1) {
-            return "";
-        }
-
-        return text.substring(firstIndex, lastIndex + 1);
-    }
-
-    static String getFullWorld(String text, String translatedText) {
-        int firstIndex = findFirstLetterIndex(text);
-        int lastIndex = findLastLetterIndex(text);
-
-        if (firstIndex == -1 || lastIndex == -1) {
-            return text;
-        }
-
-        String before = text.substring(0, firstIndex);
-        String after = text.substring(lastIndex + 1);
-        return before + translatedText + after;
-    }
-
-    private static int findFirstLetterIndex(String text) {
-        String regex = "\\p{L}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-
-        return matcher.find() ? matcher.start() : -1;
-    }
-
-    private static int findLastLetterIndex(String text) {
-        String regex = "\\p{L}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-
-        int lastIndex = -1;
-        while (matcher.find()) {
-            lastIndex = matcher.start();
-        }
-        return lastIndex;
     }
 }
