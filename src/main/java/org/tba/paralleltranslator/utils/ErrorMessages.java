@@ -8,5 +8,4 @@ public class ErrorMessages {
     public static final String EMPTY_RESPONSE_BODY = "Empty response body from translation API.";
     public static final String API_CALL_FAILURE = "Failed to get translation from API. HTTP status: ";
     public static final String GENERAL_API_ERROR = "Error occurred while calling translation API: ";
-
 }

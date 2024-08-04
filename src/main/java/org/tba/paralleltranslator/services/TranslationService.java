@@ -43,6 +43,7 @@ public class TranslationService {
     }
 
     List<Callable<String>> getTasks(String text, String sourceLang, String targetLang) throws IllegalArgumentException{
+
         String[] words = text.split("\\s+");
 
         List<Callable<String>> tasks = new ArrayList<>();

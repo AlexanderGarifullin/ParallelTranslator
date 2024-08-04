@@ -85,7 +85,7 @@ class TranslationServiceTest {
 
     @Test
     public void translate_executionException_throwsExecutionException() throws Exception {
-        // Arrange
+
         String text = "Hello World";
         String sourceLang = "en";
         String targetLang = "es";
@@ -152,5 +152,4 @@ class TranslationServiceTest {
 
         verify(translationService, times(1)).saveRequest(clientIp, text, translatedText);
     }
-
 }

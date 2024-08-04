@@ -1,6 +1,5 @@
 package org.tba.paralleltranslator.controllers;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.services.TranslationService;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -27,6 +25,7 @@ public class TranslationController {
     @PostMapping("/translate")
     public ResponseEntity<String> translate(@RequestBody TranslationRequest request,
                                             HttpServletRequest servletRequest) {
+
         translationService.processTranslationRequest(request);
 
         try {
@@ -45,7 +44,6 @@ public class TranslationController {
         } catch (RuntimeException e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
     }
 }
