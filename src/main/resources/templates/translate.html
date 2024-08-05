@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ParallelTranslator</title>
+    <link rel="stylesheet" href="/css/translatorStyle.css">
+    <script src="/js/translatorScript.js" defer></script>
+</head>
+<body>
+    <h1>Translate Text</h1>
+    <div class="container">
+        <div class="left">
+            <div>
+                <label for="sourceLang">Source Language:</label>
+                <select id="sourceLang"></select>
+            </div>
+            <div>
+                <label for="text">Text to Translate:</label>
+                <textarea id="text" rows="20" cols="50"></textarea>
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <label for="targetLang">Target Language:</label>
+                <select id="targetLang"></select>
+            </div>
+            <div>
+                <label for="translatedText">Translated Text:</label>
+                <textarea id="translatedText" rows="20" cols="50" readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button id="translateButton">Translate</button>
+    </div>
+    <div id="errorMessage"></div>
+</body>
+</html>
