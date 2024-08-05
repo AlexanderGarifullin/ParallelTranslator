@@ -3,6 +3,8 @@ package org.tba.paralleltranslator.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.tba.paralleltranslator.dao.ApiTranslationRequestsLogsDAOImpl;
+import org.tba.paralleltranslator.interfaces.ApiTranslationRequestsLogsDAO;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.utils.ErrorMessages;
@@ -20,11 +22,13 @@ public class TranslationService {
 
     private final TranslationClient translationClient;
     private final ExecutorService executorService;
+    private final ApiTranslationRequestsLogsDAO apiTranslationRequestsLogsDAO;
 
     @Autowired
-    public TranslationService(TranslationClient translationClient, ExecutorService executorService) {
+    public TranslationService(TranslationClient translationClient, ExecutorService executorService, ApiTranslationRequestsLogsDAO apiTranslationRequestsLogsDAO) {
         this.translationClient = translationClient;
         this.executorService = executorService;
+        this.apiTranslationRequestsLogsDAO = apiTranslationRequestsLogsDAO;
     }
 
     public String translate(String text, String sourceLang, String targetLang) throws InterruptedException,
@@ -73,6 +77,6 @@ public class TranslationService {
 
     @Async
     public void saveRequest(String clientIp, String text, String translatedText) {
-        System.out.println("save");
+        apiTranslationRequestsLogsDAO.save(clientIp, text, translatedText);
     }
 }
