@@ -8,10 +8,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.tba.paralleltranslator.models.Language;
 import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.services.TranslationService;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -123,6 +125,12 @@ class TranslationControllerTest {
         verify(translationService, times(1)).translate(request.getText(),
                 request.getSourceLang(), request.getTargetLang());
         verify(translationService, times(0)).saveRequest(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    public void getLanguages_makeRequest_returnsLanguages() {
+        Set<Language> languages = translationController.getLanguages();
+        verify(translationService, times(1)).getSupportedLanguages();
     }
 
     private void initData() {
