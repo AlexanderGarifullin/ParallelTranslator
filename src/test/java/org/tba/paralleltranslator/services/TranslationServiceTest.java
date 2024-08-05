@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.tba.paralleltranslator.interfaces.ApiTranslationRequestsLogsDAO;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.utils.ErrorMessages;
@@ -31,10 +32,13 @@ class TranslationServiceTest {
     @Mock
     private ExecutorService executorService;
 
+    @Mock
+    private ApiTranslationRequestsLogsDAO apiTranslationRequestsLogsDAO;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        translationService = spy(new TranslationService(translationClient, executorService));
+        translationService = spy(new TranslationService(translationClient, executorService, apiTranslationRequestsLogsDAO));
     }
 
     @Test
