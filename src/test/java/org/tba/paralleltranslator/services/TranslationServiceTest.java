@@ -7,11 +7,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.tba.paralleltranslator.interfaces.ApiTranslationRequestsLogsDAO;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
+import org.tba.paralleltranslator.models.Language;
 import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -155,5 +158,30 @@ class TranslationServiceTest {
         translationService.saveRequest(clientIp, text, translatedText);
 
         verify(translationService, times(1)).saveRequest(clientIp, text, translatedText);
+    }
+
+    @Test
+    void testGetSupportedLanguages() {
+        Set<Language> languages = translationService.getSupportedLanguages();
+
+        assertNotNull(languages, "Languages set should not be null");
+        assertFalse(languages.isEmpty(), "Languages set should not be empty");
+
+        String previousName = "";
+        for (Language language : languages) {
+            assertTrue(language.getName().compareTo(previousName) >= 0,
+                    "Languages should be sorted by name");
+            previousName = language.getName();
+        }
+
+        assertTrue(languages.stream().anyMatch(l -> l.getCode().equals("en") && l.getName().equals("English")),
+                "Languages set should contain English");
+        assertTrue(languages.stream().anyMatch(l -> l.getCode().equals("fr") && l.getName().equals("French")),
+                "Languages set should contain French");
+
+        Set<String> languageCodes = new HashSet<>();
+        for (Language language : languages) {
+            assertTrue(languageCodes.add(language.getCode()), "Language codes should be unique");
+        }
     }
 }

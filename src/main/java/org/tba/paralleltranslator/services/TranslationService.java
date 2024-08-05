@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import org.tba.paralleltranslator.dao.ApiTranslationRequestsLogsDAOImpl;
 import org.tba.paralleltranslator.interfaces.ApiTranslationRequestsLogsDAO;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
+import org.tba.paralleltranslator.models.Language;
 import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -78,5 +78,19 @@ public class TranslationService {
     @Async
     public void saveRequest(String clientIp, String text, String translatedText) {
         apiTranslationRequestsLogsDAO.save(clientIp, text, translatedText);
+    }
+
+    public Set<Language> getSupportedLanguages(){
+        Comparator<Language> languageComparator = Comparator.comparing(Language::getName);
+        Set<Language> languages = new TreeSet<>(languageComparator);
+
+        for (Locale locale : Locale.getAvailableLocales()) {
+            String languageCode = locale.getLanguage();
+            String languageName = locale.getDisplayLanguage(Locale.ENGLISH);
+            if (!languageCode.isEmpty() && !languageName.isEmpty()) {
+                languages.add(new Language(languageCode, languageName));
+            }
+        }
+        return languages;
     }
 }
