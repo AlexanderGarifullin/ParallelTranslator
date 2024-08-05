@@ -14,8 +14,6 @@ public class ApiTranslationRequestsLogsDAOImpl implements ApiTranslationRequests
 
     private final DataSource dataSource;
 
-    private int x = 10;
-
     @Autowired
     public ApiTranslationRequestsLogsDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
