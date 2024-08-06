@@ -23,7 +23,7 @@ Parallel Translator is a web application built with Java and Spring Boot for tra
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/yourusername/ParallelTranslator.git
+    git clone https://github.com/AlexanderGarifullin/ParallelTranslator.git
     cd ParallelTranslator
     ```
 
