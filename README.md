@@ -111,6 +111,25 @@ You can view the PostgreSQL database this way:
     \q
     ```
 
+## Viewing Javadoc
+
+To view the Javadoc documentation:
+
+1. **Generate Javadoc:**
+
+   Run the following Maven command to generate the Javadoc:
+
+    ```sh
+    ./mvnw javadoc:javadoc
+    ```
+
+2. **Navigate to the Javadoc directory:**
+
+   The Javadoc will be generated in the `target/site/apidocs` directory.
+
+3. **Open the Javadoc in a web browser:**
+
+   [Click here to view the Javadoc](target/site/apidocs/index.html).
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
