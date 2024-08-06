@@ -56,6 +56,10 @@ Here is a screenshot of the main page of the web application:
 
 ![Main Page Screenshot](assets/mainPage.png)
 
+If you navigate to a non-existent page, you will see a custom error page. For example, try visiting [http://localhost:8080/nonexistent](http://localhost:8080/nonexistent).
+
+![Error Page Screenshot](assets/errorPage.png)
+
 ### API Endpoints
 
 #### Translate Text
