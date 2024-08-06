@@ -1,6 +1,6 @@
 # ParallelTranslator
 
-Parallel Translator is a web application built with Java and Spring Boot for translating a set of words into another language using a third-party translation service MyMemory API. Each word is translated in separate threads with a maximum of 10 concurrent threads. The application also logs translation requests to a PostgreSQL database.
+Parallel Translator is a web application built with Java and Spring Boot for translating a set of words into another language using a third-party translation service [MyMemory API](https://mymemory.translated.net/doc/spec.php). Each word is translated in separate threads with a maximum of 10 concurrent threads. The application also logs translation requests to a PostgreSQL database.
 
 ## Technologies
 
@@ -127,9 +127,6 @@ To view the Javadoc documentation:
 
    The Javadoc will be generated in the `target/site/apidocs` directory.
 
-3. **Open the Javadoc in a web browser:**
-
-   [Click here to view the Javadoc](target/site/apidocs/index.html).
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
