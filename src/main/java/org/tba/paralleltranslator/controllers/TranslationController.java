@@ -14,28 +14,53 @@ import org.tba.paralleltranslator.utils.ErrorMessages;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Controller for handling translation-related requests.
+ */
 @Controller
 @RequestMapping("/api")
 public class TranslationController {
 
     private final TranslationService translationService;
 
+    /**
+     * Constructs a new TranslationController with the specified TranslationService.
+     *
+     * @param translationService the TranslationService to use for translations
+     */
     @Autowired
     public TranslationController(TranslationService translationService) {
         this.translationService = translationService;
     }
 
+    /**
+     * Returns the translate page.
+     *
+     * @return the name of the translate view
+     */
     @GetMapping("/translate")
     public String showTranslatePage() {
         return "translate";
     }
 
+    /**
+     * Returns the set of supported languages.
+     *
+     * @return a set of Language objects
+     */
     @GetMapping("/languages")
     @ResponseBody
     public Set<Language> getLanguages() {
         return translationService.getSupportedLanguages();
     }
 
+    /**
+     * Handles the translation request.
+     *
+     * @param request the translation request containing the text and languages
+     * @param servletRequest the HTTP servlet request to get client IP
+     * @return a ResponseEntity containing the translated text or an error message
+     */
     @PostMapping("/translate")
     @ResponseBody
     public ResponseEntity<String> translate(@RequestBody TranslationRequest request,

@@ -11,6 +11,9 @@ import org.tba.paralleltranslator.utils.ErrorMessages;
 import static org.tba.paralleltranslator.utils.StringMethods.getCleanWorld;
 import static org.tba.paralleltranslator.utils.StringMethods.replaceWorld;
 
+/**
+ * Implementation of the {@link TranslationClient} interface that uses the MyMemory API for translations.
+ */
 @Component
 public class MyMemoryTranslationClient implements TranslationClient {
 
@@ -18,11 +21,25 @@ public class MyMemoryTranslationClient implements TranslationClient {
 
     private final RestTemplate restTemplate;
 
+    /**
+     * Constructs a new MyMemoryTranslationClient with the specified RestTemplate.
+     *
+     * @param restTemplate the RestTemplate to use for making API requests
+     */
     @Autowired
     public MyMemoryTranslationClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Translates the given text from the source language to the target language using the MyMemory API.
+     *
+     * @param text the text to translate
+     * @param sourceLang the source language code
+     * @param targetLang the target language code
+     * @return the translated text
+     * @throws RuntimeException if there is an error during API call or if the response is invalid
+     */
     @Override
     public String translate(String text, String sourceLang, String targetLang) throws RuntimeException {
         String cleanWorld = getCleanWorld(text);
@@ -51,6 +68,9 @@ public class MyMemoryTranslationClient implements TranslationClient {
         }
     }
 
+    /**
+     * Inner class representing the response from the MyMemory API.
+     */
     static class TranslationResponse {
         private ResponseData responseData;
 
@@ -63,6 +83,9 @@ public class MyMemoryTranslationClient implements TranslationClient {
         }
     }
 
+    /**
+     * Inner class representing the data part of the translation response.
+     */
     static class ResponseData {
         private String translatedText;
 
