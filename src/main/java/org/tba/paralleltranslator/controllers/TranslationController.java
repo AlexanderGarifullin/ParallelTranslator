@@ -11,7 +11,6 @@ import org.tba.paralleltranslator.requests.TranslationRequest;
 import org.tba.paralleltranslator.services.TranslationService;
 import org.tba.paralleltranslator.utils.ErrorMessages;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 

@@ -3,7 +3,6 @@ package org.tba.paralleltranslator.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.tba.paralleltranslator.dao.ApiTranslationRequestsLogsDAOImpl;
 import org.tba.paralleltranslator.interfaces.ApiTranslationRequestsLogsDAO;
 import org.tba.paralleltranslator.interfaces.TranslationClient;
 import org.tba.paralleltranslator.models.Language;
