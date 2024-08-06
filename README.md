@@ -48,7 +48,7 @@ Parallel Translator is a web application built with Java and Spring Boot for tra
 
 ## Usage
 
-Once the application is running, it will be accessible at `http://localhost:8080/api/translate`.
+Once the application is running, it will be accessible at [http://localhost:8080/api/translate](http://localhost:8080/api/translate).
 
 ### Web Interface
 
